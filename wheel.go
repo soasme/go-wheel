@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/mail"
+	"path/filepath"
 	"regexp"
 )
 
@@ -26,6 +27,7 @@ type WheelFile struct {
 }
 
 func ParseFilename(filename string) (f *WheelFile, err error) {
+	filename = filepath.Base(filename)
 	re := regexp.MustCompile(`^(?P<Distribution>[a-zA-Z0-9_-]+)-(?P<Version>[^-]+)-((?P<BuildTag>\d[^-]*)-)?(?P<PythonTag>[^-]+)-(?P<ABITag>[^-]+)-(?P<PlatformTag>[^-]+)\.whl$`)
 	m := re.FindStringSubmatch(filename)
 	if m == nil {
